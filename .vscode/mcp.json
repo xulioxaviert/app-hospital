@@ -1,0 +1,86 @@
+{
+  "servers": {
+    "Notion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@notionhq/notion-mcp-server"
+      ],
+      "env": {
+        "NOTION_TOKEN": "<REDACTED_NOTION_TOKEN>"
+      },
+      "type": "stdio"
+    },
+    "Apify": {
+      "url": "https://mcp.apify.com?tools=actors,docs,apify/rag-web-browser",
+      "type": "http"
+    },
+    "microsoft/playwright-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+    "Puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "type": "stdio"
+    },
+    "WebscrapingAi": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "webscraping-ai-mcp"
+      ],
+      "env": {
+        "WEBSCRAPING_AI_API_KEY": "<REDACTED_WEB_SCRAPING_API_KEY>",
+        "WEBSCRAPING_AI_CONCURRENCY_LIMIT": "100"
+      }
+    },
+    "n8n": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway",
+        "--streamableHttp",
+        "http://localhost:5678/mcp-server/http",
+        "--header",
+        "authorization:Bearer <REDACTED_N8N_BEARER>"
+      ],
+      "type": "stdio"
+    },
+    "io.github.ChromeDevTools/chrome-devtools-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "--registry",
+        "https://registry.npmjs.org",
+        "chrome-devtools-mcp@0.17.0"
+      ],
+      "gallery": "https://api.mcp.github.com",
+      "version": "0.17.0"
+    },
+    "GitHub": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
+  },
+  "inputs": [
+    {
+      "id": "Authorization",
+      "type": "promptString",
+      "description": "Authentication token (PAT or App token)",
+      "password": true
+    },
+    {
+      "id": "token",
+      "type": "promptString",
+      "description": "",
+      "password": true
+    }
+  ]
+}

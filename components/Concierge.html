@@ -1,0 +1,138 @@
+<section class="py-32 bg-white text-gray-900" id="concierge">
+  <div class="max-w-[1280px] mx-auto px-8 lg:px-12">
+    <div class="text-center mb-16">
+      <span class="text-[10px] uppercase tracking-[0.5em] text-primary font-bold block mb-4">
+        Concierge Desk
+      </span>
+      <h2 class="text-4xl lg:text-5xl mb-6 text-primary">Find Your Perfect Specialist</h2>
+      <p class="text-neutral-muted font-light">
+        Our guided discovery ensures you are matched with the practitioner best
+        suited to your wellness goals.
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-10 lg:p-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-lg shadow-lg">
+  <!-- Left Section -->
+  <div class="bg-primary text-neutral-light p-6 rounded-lg">
+    <h2 class="text-2xl font-bold mb-4">Complete Your Appointment</h2>
+    <p class="text-sm mb-6">
+      Please provide your details and select your preferred date and time to book your appointment.
+    </p>
+    <div class="bg-primary/80 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold">Your Selection</h3>
+      <p class="text-sm mt-2">Dr. Sarah Johnson</p>
+      <p class="text-sm">Cardiology Dept.</p>
+      <p class="text-sm mt-4">Service: Heart Screening</p>
+      <p class="text-sm">Duration: 45 Minutes</p>
+    </div>
+    <ul class="mt-6 space-y-2 text-sm">
+      <li class="flex items-center gap-2">
+        <span class="material-symbols-outlined">verified_user</span>
+        HIPAA Compliant & Secure
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="material-symbols-outlined">notifications</span>
+        Instant SMS Reminders
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right Section -->
+  <div class="space-y-6">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="full-name" class="block text-sm font-medium text-primary">Full Name</label>
+        <input
+          type="text"
+          id="full-name"
+          name="full-name"
+          placeholder="John Patient"
+          class="mt-1 block w-full px-4 py-3 border border-neutral-muted rounded-lg text-primary focus:ring-accent focus:border-accent shadow-sm"
+          required
+        />
+      </div>
+      <div>
+        <label for="email-address" class="block text-sm font-medium text-primary">Contact Email</label>
+        <input
+          type="email"
+          id="email-address"
+          name="email-address"
+          placeholder="your@email.com"
+          class="mt-1 block w-full px-4 py-3 border border-neutral-muted rounded-lg text-primary focus:ring-accent focus:border-accent shadow-sm"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="specialist-selection" class="block text-sm font-medium text-primary">Specialist Selection</label>
+        <select
+          id="specialist-selection"
+          name="specialist-selection"
+          class="mt-1 block w-full px-4 py-3 border border-neutral-muted rounded-lg text-primary focus:ring-accent focus:border-accent shadow-sm"
+          required
+        >
+          <option value="dr-sarah-johnson">Dr. Sarah Johnson (Cardiology)</option>
+          <option value="dr-jane-doe">Dr. Jane Doe (Neurology)</option>
+          <option value="dr-john-smith">Dr. John Smith (Orthopedics)</option>
+        </select>
+      </div>
+      <div>
+        <label for="specific-service" class="block text-sm font-medium text-primary">Specific Service</label>
+        <select
+          id="specific-service"
+          name="specific-service"
+          class="mt-1 block w-full px-4 py-3 border border-neutral-muted rounded-lg text-primary focus:ring-accent focus:border-accent shadow-sm"
+          required
+        >
+          <option value="heart-screening">Heart Screening</option>
+          <option value="general-checkup">General Checkup</option>
+          <option value="physical-therapy">Physical Therapy</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="appointment-date" class="block text-sm font-medium text-primary">Select Date & Available Slot</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+        <input
+          type="date"
+          id="appointment-date"
+          name="appointment-date"
+          class="block w-full px-4 py-3 border border-neutral-muted rounded-lg text-primary focus:ring-accent focus:border-accent shadow-sm"
+          required
+        />
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" class="time-slot-button px-4 py-2 border border-neutral-muted rounded-lg text-primary hover:bg-accent/10 focus:ring-accent focus;border-accent">09:30 AM</button>
+          <button type="button" class="time-slot-button px-4 py-2 border border-neutral-muted rounded-lg text-primary hover:bg-accent/10 focus:ring-accent focus;border-accent">10:45 AM</button>
+          <button type="button" class="time-slot-button px-4 py-2 border border-neutral-muted rounded-lg text-primary hover:bg-accent/10 focus:ring-accent focus;border-accent">11:30 AM</button>
+          <button type="button" class="time-slot-button px-4 py-2 border border-neutral-muted rounded-lg text-primary hover:bg-accent/10 focus:ring-accent focus;border-accent">01:00 PM</button>
+          <button type="button" class="time-slot-button px-4 py-2 border border-neutral-muted rounded-lg text-primary hover:bg-accent/10 focus:ring-accent focus;border-accent">02:15 PM</button>
+          <button type="button" class="time-slot-button px-4 py-2 border border-neutral-muted rounded-lg text-primary hover:bg-accent/10 focus:ring-accent focus;border-accent">03:30 PM</button>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="w-full bg-primary text-neutral-light py-4 text-sm uppercase tracking-wide font-bold rounded-lg hover:bg-charcoal focus:ring-4 focus:ring-accent transition-all flex items-center justify-center gap-2"
+    >
+      <span class="material-symbols-outlined text-lg">verified_user</span>
+      Confirm Specialist Booking
+    </button>
+    <p
+      class="text-center text-xs text-neutral-muted mt-4 italic"
+    >
+      By booking, you agree to our Terms of Service and Medical Privacy Policy.
+    </p>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .time-slot-button {
+    max-height: 60px;
+  }
+</style>
