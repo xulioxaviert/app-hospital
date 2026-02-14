@@ -1,0 +1,15 @@
+<!-- Plantilla de mensaje de commit -->
+<tipo>(alcance): asunto corto (máx 50 chars)
+
+Descripción más amplia (opcional). Explica el POR QUÉ, no sólo el QUÉ.
+
+Ejemplos de tipos: feat, fix, docs, style, refactor, perf, test, chore
+
+Footer: referencia de issue o ticket (ej: Closes #42)
+
+Ejemplo:
+feat(ui): mejorar formulario de concierge
+
+Mejoras en la experiencia del formulario `#concierge` y ajustes de accesibilidad.
+
+Closes #12

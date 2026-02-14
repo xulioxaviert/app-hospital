@@ -1,0 +1,73 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AETHERIA | Bespoke Wellness &amp; Medical Atelier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2C3E30", // Deep Forest Green
+              accent: "#C5B499", // Muted Gold/Beige
+              "neutral-light": "#FAF9F6", // Alabaster
+              "neutral-muted": "#E5E1DA", // Natural Stone
+              charcoal: "#2A2A2A",
+            },
+            fontFamily: {
+              display: ["Playfair Display", "serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        body {
+          @apply font-sans bg-neutral-light text-charcoal antialiased;
+        }
+        h1,
+        h2,
+        h3,
+        .font-serif {
+          @apply font-display;
+        }
+      }
+    </style>
+  </head>
+  <body class="selection:bg-accent/30">
+    <div data-include="components/header.html"></div>
+    <main>
+      <div data-include="components/hero.html"></div>
+      <div data-include="components/services.html"></div>
+      <div data-include="components/concierge.html"></div>
+      <div data-include="components/practitioners.html"></div>
+      <div data-include="components/location.html"></div>
+    </main>
+    <div data-include="components/footer.html"></div>
+    <script>
+      // Tiny client-side component loader: fetch HTML fragments and inject
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-include]').forEach(function (el) {
+          var path = el.getAttribute('data-include');
+          fetch(path)
+            .then(function (r) { return r.ok ? r.text() : Promise.reject(r.status); })
+            .then(function (html) { el.innerHTML = html; })
+            .catch(function () { /* fail silently */ });
+        });
+      });
+    </script>
+  </body>
+</html>
