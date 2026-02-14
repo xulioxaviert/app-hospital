@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+  <rect x="20" y="20" width="760" height="760" fill="#F5F3F1" stroke="#E5E1DA" stroke-width="2"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#2A2A2A" font-family="Inter, sans-serif" font-size="20">practitioners-portrait placeholder</text>
+</svg>
