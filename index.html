@@ -58,6 +58,35 @@
     </main>
     <div data-include="components/footer.html"></div>
     <script>
+            // Interacción para Preferred Window y submit del formulario Concierge
+            document.addEventListener('DOMContentLoaded', function () {
+              document.addEventListener('click', function (e) {
+                if (e.target.classList && e.target.classList.contains('preferred-window-btn')) {
+                  e.preventDefault();
+                  // Quitar estilos activos de todos
+                  document.querySelectorAll('.preferred-window-btn').forEach(btn => {
+                    btn.classList.remove('border-accent', 'bg-accent/5', 'text-primary', 'hover:bg-accent', 'hover:text-white');
+                    btn.classList.add('border-neutral-muted', 'text-charcoal/50');
+                  });
+                  // Activar el seleccionado
+                  e.target.classList.add('border-accent', 'bg-accent/5', 'text-primary');
+                  e.target.classList.remove('border-neutral-muted', 'text-charcoal/50');
+                  // Guardar valor
+                  const input = document.getElementById('preferred-window-input');
+                  if (input) input.value = e.target.dataset.value;
+                }
+              });
+              // Submit del formulario
+              document.addEventListener('submit', function (e) {
+                const form = e.target;
+                if (form && form.querySelector('#datepicker')) {
+                  e.preventDefault();
+                  const data = Object.fromEntries(new FormData(form).entries());
+                  console.log('Formulario enviado:', data);
+                  // Aquí puedes hacer el fetch/POST real al backend si lo deseas
+                }
+              });
+            });
       // Tiny client-side component loader: fetch HTML fragments and inject
       document.addEventListener('DOMContentLoaded', function () {
         const includes = document.querySelectorAll('[data-include]');

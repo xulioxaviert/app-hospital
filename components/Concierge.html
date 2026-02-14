@@ -16,21 +16,21 @@
             </div>
             <div class="grid md:grid-cols-3 gap-4">
               <label class="relative cursor-pointer group">
-                <input checked class="peer sr-only" name="specialist" type="radio" />
+                <input checked class="peer sr-only" name="specialist" type="radio" value="Longevity & Vitality" />
                 <div class="p-6 border border-neutral-muted peer-checked:border-accent peer-checked:bg-neutral-muted/30 transition-all text-center">
                   <span class="material-symbols-outlined text-accent mb-3 block">spa</span>
                   <span class="block text-[10px] uppercase tracking-widest font-bold text-primary">Longevity &amp; Vitality</span>
                 </div>
               </label>
               <label class="relative cursor-pointer group">
-                <input class="peer sr-only" name="specialist" type="radio" />
+                <input class="peer sr-only" name="specialist" type="radio" value="Mental Performance" />
                 <div class="p-6 border border-neutral-muted peer-checked:border-accent peer-checked:bg-neutral-muted/30 transition-all text-center">
                   <span class="material-symbols-outlined text-accent mb-3 block">psychology</span>
                   <span class="block text-[10px] uppercase tracking-widest font-bold text-primary">Mental Performance</span>
                 </div>
               </label>
               <label class="relative cursor-pointer group">
-                <input class="peer sr-only" name="specialist" type="radio" />
+                <input class="peer sr-only" name="specialist" type="radio" value="Diagnostic Medicine" />
                 <div class="p-6 border border-neutral-muted peer-checked:border-accent peer-checked:bg-neutral-muted/30 transition-all text-center">
                   <span class="material-symbols-outlined text-accent mb-3 block">medical_information</span>
                   <span class="block text-[10px] uppercase tracking-widest font-bold text-primary">Diagnostic Medicine</span>
@@ -47,11 +47,11 @@
             <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
               <div class="space-y-2 group">
                 <label class="text-[10px] uppercase tracking-widest font-bold text-charcoal/40 group-focus-within:text-accent transition-colors">Full Name</label>
-                <input class="w-full bg-transparent border-0 border-b border-neutral-muted focus:ring-0 focus:border-accent p-0 pb-2 text-lg font-light transition-all" placeholder="E.g. Julian Vane" type="text" name="fullName" />
+                <input class="w-full bg-neutral-light border-0 border-b-2 border-neutral-muted focus:ring-0 focus:border-accent p-0 pb-2 text-lg font-light transition-colors outline-none" placeholder="E.g. Julian Vane" type="text" name="fullName" />
               </div>
               <div class="space-y-2 group">
                 <label class="text-[10px] uppercase tracking-widest font-bold text-charcoal/40 group-focus-within:text-accent transition-colors">Email Address</label>
-                <input class="w-full bg-transparent border-0 border-b border-neutral-muted focus:ring-0 focus:border-accent p-0 pb-2 text-lg font-light transition-all" placeholder="private@example.com" type="email" name="email" />
+                <input class="w-full bg-neutral-light border-0 border-b-2 border-neutral-muted focus:ring-0 focus:border-accent p-0 pb-2 text-lg font-light transition-colors outline-none" placeholder="private@example.com" type="email" name="email" />
               </div>
             </div>
           </div>
@@ -78,9 +78,10 @@
               </div>
               <div class="grid grid-cols-1 gap-3">
                 <p class="text-[10px] uppercase tracking-widest font-bold text-charcoal/40 mb-2">Preferred Window</p>
-                <button class="py-4 border border-accent bg-accent/5 text-primary text-[10px] uppercase tracking-widest font-bold hover:bg-accent hover:text-white transition-all text-center" type="button">10:00 AM — Private Consultation</button>
-                <button class="py-4 border border-neutral-muted text-charcoal/50 text-[10px] uppercase tracking-widest font-bold hover:border-accent hover:text-accent transition-all text-center" type="button">02:30 PM — Clinical Review</button>
-                <button class="py-4 border border-neutral-muted text-charcoal/50 text-[10px] uppercase tracking-widest font-bold hover:border-accent hover:text-accent transition-all text-center" type="button">04:00 PM — Discovery Session</button>
+                <input type="hidden" name="preferredWindow" id="preferred-window-input" />
+                <button class="py-4 border border-accent bg-accent/5 text-primary text-[10px] uppercase tracking-widest font-bold hover:bg-accent hover:text-white transition-all text-center preferred-window-btn" type="button" data-value="10:00 AM — Private Consultation">10:00 AM — Private Consultation</button>
+                <button class="py-4 border border-neutral-muted text-charcoal/50 text-[10px] uppercase tracking-widest font-bold hover:border-accent hover:text-accent transition-all text-center preferred-window-btn" type="button" data-value="02:30 PM — Clinical Review">02:30 PM — Clinical Review</button>
+                <button class="py-4 border border-neutral-muted text-charcoal/50 text-[10px] uppercase tracking-widest font-bold hover:border-accent hover:text-accent transition-all text-center preferred-window-btn" type="button" data-value="04:00 PM — Discovery Session">04:00 PM — Discovery Session</button>
               </div>
             </div>
           </div>
