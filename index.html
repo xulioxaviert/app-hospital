@@ -48,6 +48,22 @@
     </style>
   </head>
   <body class="selection:bg-accent/30">
+        <!-- Modal de confirmación -->
+        <div id="modal-success" class="fixed inset-0 z-50 flex items-center justify-center bg-charcoal/60 backdrop-blur-sm hidden">
+          <div class="bg-neutral-light rounded-lg shadow-2xl p-8 max-w-sm w-full text-center border-t-4 border-accent">
+            <span class="material-symbols-outlined text-accent text-5xl mb-4 block">check_circle</span>
+            <h2 class="font-serif text-2xl text-primary mb-2">¡Cita solicitada!</h2>
+            <p class="text-charcoal/70 mb-6">Tu solicitud ha sido enviada correctamente.<br>Nos pondremos en contacto contigo pronto.</p>
+            <button id="close-modal-success" class="mt-2 px-6 py-2 bg-primary text-neutral-light rounded font-bold uppercase tracking-widest text-xs hover:bg-charcoal transition-all">Cerrar</button>
+          </div>
+        </div>
+        <!-- Spinner -->
+        <div id="spinner-overlay" class="fixed inset-0 z-40 flex items-center justify-center bg-charcoal/30 hidden">
+          <div class="flex flex-col items-center">
+            <span class="inline-block animate-spin rounded-full border-4 border-accent border-t-transparent h-12 w-12 mb-4"></span>
+            <span class="text-accent font-semibold text-xs tracking-widest">Enviando solicitud...</span>
+          </div>
+        </div>
     <div data-include="components/header.html"></div>
     <main>
       <div data-include="components/hero.html"></div>
@@ -58,35 +74,53 @@
     </main>
     <div data-include="components/footer.html"></div>
     <script>
-            // Interacción para Preferred Window y submit del formulario Concierge
-            document.addEventListener('DOMContentLoaded', function () {
-              document.addEventListener('click', function (e) {
-                if (e.target.classList && e.target.classList.contains('preferred-window-btn')) {
-                  e.preventDefault();
-                  // Quitar estilos activos de todos
-                  document.querySelectorAll('.preferred-window-btn').forEach(btn => {
-                    btn.classList.remove('border-accent', 'bg-accent/5', 'text-primary', 'hover:bg-accent', 'hover:text-white');
-                    btn.classList.add('border-neutral-muted', 'text-charcoal/50');
-                  });
-                  // Activar el seleccionado
-                  e.target.classList.add('border-accent', 'bg-accent/5', 'text-primary');
-                  e.target.classList.remove('border-neutral-muted', 'text-charcoal/50');
-                  // Guardar valor
-                  const input = document.getElementById('preferred-window-input');
-                  if (input) input.value = e.target.dataset.value;
-                }
-              });
-              // Submit del formulario
-              document.addEventListener('submit', function (e) {
-                const form = e.target;
-                if (form && form.querySelector('#datepicker')) {
-                  e.preventDefault();
-                  const data = Object.fromEntries(new FormData(form).entries());
-                  console.log('Formulario enviado:', data);
-                  // Aquí puedes hacer el fetch/POST real al backend si lo deseas
-                }
-              });
+      // Interacción para Preferred Window y submit del formulario Concierge
+      document.addEventListener('DOMContentLoaded', function () {
+        // Preferred Window
+        document.addEventListener('click', function (e) {
+          if (e.target.classList && e.target.classList.contains('preferred-window-btn')) {
+            e.preventDefault();
+            document.querySelectorAll('.preferred-window-btn').forEach(btn => {
+              btn.classList.remove('border-accent', 'bg-accent/5', 'text-primary', 'hover:bg-accent', 'hover:text-white');
+              btn.classList.add('border-neutral-muted', 'text-charcoal/50');
             });
+            e.target.classList.add('border-accent', 'bg-accent/5', 'text-primary');
+            e.target.classList.remove('border-neutral-muted', 'text-charcoal/50');
+            const input = document.getElementById('preferred-window-input');
+            if (input) input.value = e.target.dataset.value;
+          }
+        });
+        // Modal cerrar
+        document.addEventListener('click', function (e) {
+          if (e.target && e.target.id === 'close-modal-success') {
+            document.getElementById('modal-success').classList.add('hidden');
+          }
+        });
+        // Submit del formulario
+        document.addEventListener('submit', function (e) {
+          const form = e.target;
+          if (form && form.querySelector('#datepicker')) {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(form).entries());
+            // Mostrar spinner
+            document.getElementById('spinner-overlay').classList.remove('hidden');
+            // Simular envío (puedes reemplazar por fetch real)
+            setTimeout(() => {
+              document.getElementById('spinner-overlay').classList.add('hidden');
+              document.getElementById('modal-success').classList.remove('hidden');
+              console.log('Formulario enviado:', data);
+              form.reset();
+              // Limpiar selección de ventana preferida
+              document.querySelectorAll('.preferred-window-btn').forEach(btn => {
+                btn.classList.remove('border-accent', 'bg-accent/5', 'text-primary');
+                btn.classList.add('border-neutral-muted', 'text-charcoal/50');
+              });
+              // Limpiar datepicker visual
+              if (window.initDatePicker) initDatePicker();
+            }, 1200);
+          }
+        });
+      });
       // Tiny client-side component loader: fetch HTML fragments and inject
       document.addEventListener('DOMContentLoaded', function () {
         const includes = document.querySelectorAll('[data-include]');
