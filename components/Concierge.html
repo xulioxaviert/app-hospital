@@ -63,22 +63,17 @@
             </div>
             <div class="grid lg:grid-cols-2 gap-12">
               <div class="space-y-4">
-                <div class="flex items-center justify-between border-b border-neutral-muted pb-4">
-                  <span class="text-sm font-semibold tracking-widest uppercase">November 2023</span>
-                  <div class="flex gap-4">
-                    <span class="material-symbols-outlined text-sm cursor-pointer hover:text-accent transition-colors">chevron_left</span>
-                    <span class="material-symbols-outlined text-sm cursor-pointer hover:text-accent transition-colors">chevron_right</span>
+                <div id="datepicker" class="w-full">
+                  <input type="hidden" name="appointmentDate" id="selected-date" />
+                  <div class="flex items-center justify-between border-b border-neutral-muted pb-4">
+                    <button type="button" id="prev-month" aria-label="Previous month" class="material-symbols-outlined text-sm cursor-pointer hover:text-accent transition-colors bg-transparent border-0 p-0">chevron_left</button>
+                    <span id="datepicker-month" class="text-sm font-semibold tracking-widest uppercase"></span>
+                    <button type="button" id="next-month" aria-label="Next month" class="material-symbols-outlined text-sm cursor-pointer hover:text-accent transition-colors bg-transparent border-0 p-0">chevron_right</button>
                   </div>
-                </div>
-                <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-accent mb-2"><span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span><span>SU</span></div>
-                <div class="grid grid-cols-7 gap-2 text-center">
-                  <span class="py-2 text-neutral-muted text-sm font-light">28</span>
-                  <span class="py-2 text-neutral-muted text-sm font-light">29</span>
-                  <span class="py-2 hover:bg-accent/10 rounded-sm cursor-pointer text-sm font-light transition-all">1</span>
-                  <span class="py-2 hover:bg-accent/10 rounded-sm cursor-pointer text-sm font-light transition-all">2</span>
-                  <span class="py-2 bg-primary text-neutral-light rounded-sm text-sm font-semibold cursor-pointer shadow-lg shadow-primary/20">3</span>
-                  <span class="py-2 hover:bg-accent/10 rounded-sm cursor-pointer text-sm font-light transition-all">4</span>
-                  <span class="py-2 hover:bg-accent/10 rounded-sm cursor-pointer text-sm font-light transition-all">5</span>
+                  <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-accent mb-2 mt-2">
+                    <span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span><span>SU</span>
+                  </div>
+                  <div id="datepicker-days" class="grid grid-cols-7 gap-2 text-center"></div>
                 </div>
               </div>
               <div class="grid grid-cols-1 gap-3">
