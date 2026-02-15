@@ -102,8 +102,31 @@
           if (form && form.querySelector('#datepicker')) {
             e.preventDefault();
             const data = Object.fromEntries(new FormData(form).entries());
+            // Validación obligatoria nombre y correo
+            if (!data.fullName || !data.email) {
+              mostrarModalError('Por favor, ingresa tu nombre y correo electrónico para solicitar la cita.');
+              return;
+            }
             // Mostrar spinner
             document.getElementById('spinner-overlay').classList.remove('hidden');
+                  // Modal de error para campos obligatorios
+                  function mostrarModalError(mensaje) {
+                    let modal = document.createElement('div');
+                    modal.id = 'modal-error';
+                    modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-charcoal/60 backdrop-blur-sm';
+                    modal.innerHTML = `
+                      <div class="bg-neutral-light rounded-lg shadow-2xl p-8 max-w-sm w-full text-center border-t-4 border-red-600">
+                        <span class="material-symbols-outlined text-red-600 text-5xl mb-4 block">error</span>
+                        <h2 class="font-serif text-2xl text-primary mb-2">Faltan datos obligatorios</h2>
+                        <p class="text-charcoal/70 mb-6">${mensaje}</p>
+                        <button id="close-modal-error" class="mt-2 px-6 py-2 bg-red-600 text-neutral-light rounded font-bold uppercase tracking-widest text-xs hover:bg-charcoal transition-all">Cerrar</button>
+                      </div>
+                    `;
+                    document.body.appendChild(modal);
+                    document.getElementById('close-modal-error').onclick = function() {
+                      modal.remove();
+                    };
+                  }
             // Envío real con fetch
             fetch('http://localhost:3001/api/appointments', {
               method: 'POST',
@@ -117,6 +140,51 @@
                 return response.json();
               })
               .then(result => {
+                // Disparar webhook de n8n tras éxito
+                const datosCita = {
+                  nombre: data.fullName || '',
+                  email: data.email || '',
+                  fecha: data.appointmentDate || '',
+                  hora: (data.preferredWindow || '').split('—')[0].trim() || '',
+                  servicio: data.specialist || ''
+                };
+                fetch('http://localhost:5678/webhook-test/cita-confirmada', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(datosCita)
+                })
+                  .then(res => {
+                    if (res.ok) {
+                      res.json().then(json => {
+                        // Mostrar toast visual si workflow fue disparado
+                        if (json.message && json.message.includes('Workflow was started')) {
+                          mostrarToast('Notificación enviada a n8n correctamente');
+                        } else {
+                          mostrarToast('Respuesta inesperada de n8n', true);
+                        }
+                      });
+                    } else {
+                      mostrarToast('Error al disparar el webhook de n8n', true);
+                      console.error('Error al disparar el webhook de n8n');
+                    }
+                  })
+                  .catch(err => {
+                    mostrarToast('Error al disparar el webhook de n8n', true);
+                    console.error('Error al disparar el webhook de n8n:', err);
+                  });
+                      // Toast visual para feedback de integración n8n
+                      function mostrarToast(mensaje, esError) {
+                        let toast = document.createElement('div');
+                        toast.textContent = mensaje;
+                        toast.className = 'fixed bottom-6 right-6 z-[9999] px-6 py-3 rounded shadow-lg text-sm font-semibold transition-all ' + (esError ? 'bg-red-600 text-white' : 'bg-accent text-primary');
+                        document.body.appendChild(toast);
+                        setTimeout(() => {
+                          toast.classList.add('opacity-0');
+                          setTimeout(() => toast.remove(), 400);
+                        }, 3000);
+                      }
                 document.getElementById('spinner-overlay').classList.add('hidden');
                 document.getElementById('modal-success').classList.remove('hidden');
                 form.reset();
