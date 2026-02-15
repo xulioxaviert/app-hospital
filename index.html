@@ -104,20 +104,35 @@
             const data = Object.fromEntries(new FormData(form).entries());
             // Mostrar spinner
             document.getElementById('spinner-overlay').classList.remove('hidden');
-            // Simular envío (puedes reemplazar por fetch real)
-            setTimeout(() => {
-              document.getElementById('spinner-overlay').classList.add('hidden');
-              document.getElementById('modal-success').classList.remove('hidden');
-              console.log('Formulario enviado:', data);
-              form.reset();
-              // Limpiar selección de ventana preferida
-              document.querySelectorAll('.preferred-window-btn').forEach(btn => {
-                btn.classList.remove('border-accent', 'bg-accent/5', 'text-primary');
-                btn.classList.add('border-neutral-muted', 'text-charcoal/50');
+            // Envío real con fetch
+            fetch('http://localhost:3001/api/appointments', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+              .then(response => {
+                if (!response.ok) throw new Error('Error en el envío');
+                return response.json();
+              })
+              .then(result => {
+                document.getElementById('spinner-overlay').classList.add('hidden');
+                document.getElementById('modal-success').classList.remove('hidden');
+                form.reset();
+                // Limpiar selección de ventana preferida
+                document.querySelectorAll('.preferred-window-btn').forEach(btn => {
+                  btn.classList.remove('border-accent', 'bg-accent/5', 'text-primary');
+                  btn.classList.add('border-neutral-muted', 'text-charcoal/50');
+                });
+                // Limpiar datepicker visual
+                if (window.initDatePicker) initDatePicker();
+              })
+              .catch(error => {
+                document.getElementById('spinner-overlay').classList.add('hidden');
+                alert('No se pudo enviar la solicitud. Intenta de nuevo.');
+                console.error('Error al enviar:', error);
               });
-              // Limpiar datepicker visual
-              if (window.initDatePicker) initDatePicker();
-            }, 1200);
           }
         });
       });
