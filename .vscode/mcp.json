@@ -41,18 +41,7 @@
         "WEBSCRAPING_AI_CONCURRENCY_LIMIT": "100"
       }
     },
-    "n8n": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "supergateway",
-        "--streamableHttp",
-        "http://localhost:5678/mcp-server/http",
-        "--header",
-        "authorization:Bearer <REDACTED_N8N_BEARER>"
-      ],
-      "type": "stdio"
-    },
+    
     "io.github.ChromeDevTools/chrome-devtools-mcp": {
       "type": "stdio",
       "command": "npx",

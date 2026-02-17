@@ -1,0 +1,180 @@
+{
+  "name": "Gmail Ollama Drive responder curso",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "trigger",
+        "resource": "message",
+        "filters": {
+          "hasAttachment": false
+        }
+      },
+      "name": "Gmail Trigger",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [100, 100],
+      "credentials": {
+        "gmailOAuth2Api": "YOUR_GMAIL_CREDENTIAL"
+      }
+    },
+    {
+      "parameters": {
+        "prompt": "Lee el correo y responde: ¿el usuario solicita información de algún curso? Si sí, extrae el nombre del curso. Responde solo el nombre del curso o 'ninguno'.",
+        "input": "={{$json[\"body\"]}}"
+      },
+      "name": "Ollama AI - Detecta curso",
+      "type": "n8n-nodes-base.ollama",
+      "typeVersion": 1,
+      "position": [300, 100],
+      "credentials": {
+        "ollamaApi": "YOUR_OLLAMA_CREDENTIAL"
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "// Parsea el string JSON y genera el nombre de archivo\nconst data = JSON.parse($json.output);\nconst curso = data.curso ? data.curso.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'desconocido';\nreturn [{ filename: `curso-${curso}.pdf` }];"
+      },
+      "name": "Formatea nombre archivo",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [400, 100]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "resource": "file",
+        "query": "={{$json[\"Formatea nombre archivo\"].filename}}",
+        "parentId": "YOUR_DRIVE_FOLDER_ID"
+      },
+      "name": "Google Drive Search",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 1,
+      "position": [500, 100],
+      "credentials": {
+        "googleDriveOAuth2Api": "YOUR_GOOGLE_DRIVE_CREDENTIAL"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "resource": "file",
+        "fileId": "={{$json[\"Google Drive Search\"][\"id\"]}}"
+      },
+      "name": "Google Drive Download",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 1,
+      "position": [700, 100],
+      "credentials": {
+        "googleDriveOAuth2Api": "YOUR_GOOGLE_DRIVE_CREDENTIAL"
+      }
+    },
+    {
+      "parameters": {
+        "prompt": "Redacta una respuesta humana para el usuario, adjuntando el PDF del curso solicitado. Sé cordial y breve.",
+        "input": "={{$json[\"body\"]}}"
+      },
+      "name": "Ollama AI - Responde",
+      "type": "n8n-nodes-base.ollama",
+      "typeVersion": 1,
+      "position": [900, 100],
+      "credentials": {
+        "ollamaApi": "YOUR_OLLAMA_CREDENTIAL"
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "resource": "message",
+        "to": "={{$json[\"from\"]}}",
+        "subject": "Información solicitada: {{$json[\"Ollama AI - Detecta curso\"]}}",
+        "body": "={{$json[\"Ollama AI - Responde\"]}}",
+        "attachments": [
+          {
+            "binaryPropertyName": "data"
+          }
+        ]
+      },
+      "name": "Gmail Send",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [1100, 100],
+      "credentials": {
+        "gmailOAuth2Api": "YOUR_GMAIL_CREDENTIAL"
+      }
+    }
+  ],
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Ollama AI - Detecta curso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama AI - Detecta curso": {
+      "main": [
+        [
+          {
+            "node": "Formatea nombre archivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatea nombre archivo": {
+      "main": [
+        [
+          {
+            "node": "Google Drive Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Search": {
+      "main": [
+        [
+          {
+            "node": "Google Drive Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Download": {
+      "main": [
+        [
+          {
+            "node": "Ollama AI - Responde",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama AI - Responde": {
+      "main": [
+        [
+          {
+            "node": "Gmail Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": "1",
+  "pinData": {},
+  "version": 1,
+  "type": "n8n-workflow"
+}
